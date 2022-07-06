@@ -1,2 +1,4 @@
+from crawler.cars.spiders.car_spider import CarSpider
 
-print('aSd')
+if __name__ == '__main__':
+    print('Start scraping..')
