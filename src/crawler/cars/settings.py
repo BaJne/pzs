@@ -12,12 +12,25 @@ BOT_NAME = 'cars'
 SPIDER_MODULES = ['cars.spiders']
 NEWSPIDER_MODULE = 'cars.spiders'
 
-
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
 USER_AGENT = 'student project (+https://www.etf.bg.ac.rs/)'
 
 # Obey robots.txt rules
 ROBOTSTXT_OBEY = True
+
+# Desired file format
+FEED_FORMAT = "json"
+
+# Name of the file where
+# data extracted is stored
+FEED_URI = r"./../../../output/cars_"
+
+FEED_EXPORT_ENCODING = 'utf-8'
+ITEM_PIPELINES = {
+  # 'scrapy.pipelines.files.FilesPipeline': 1,
+  'crawler.cars.pipelines.CarsPipeline': 1
+}
+FILES_STORE = r"./../../../output/files"
 
 # Configure maximum concurrent requests performed by Scrapy (default: 16)
 #CONCURRENT_REQUESTS = 32
@@ -26,6 +39,7 @@ ROBOTSTXT_OBEY = True
 # See https://docs.scrapy.org/en/latest/topics/settings.html#download-delay
 # See also autothrottle settings and docs
 #DOWNLOAD_DELAY = 3
+
 # The download delay setting will honor only one of:
 #CONCURRENT_REQUESTS_PER_DOMAIN = 16
 #CONCURRENT_REQUESTS_PER_IP = 16
@@ -50,9 +64,9 @@ ROBOTSTXT_OBEY = True
 
 # Enable or disable downloader middlewares
 # See https://docs.scrapy.org/en/latest/topics/downloader-middleware.html
-#DOWNLOADER_MIDDLEWARES = {
-#    'cars.middlewares.CarsDownloaderMiddleware': 543,
-#}
+# DOWNLOADER_MIDDLEWARES = {
+    # 'cars.middlewares.CarsDownloaderMiddleware': 543,
+# }
 
 # Enable or disable extensions
 # See https://docs.scrapy.org/en/latest/topics/extensions.html

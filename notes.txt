@@ -1,2 +1,0 @@
-scrapy shell "https://www.etf.bg.ac.rs/" -> Manuelno scrapuj tekst
-scrapy crawl cars -> Pokreni kravler projekat (Pozicionirati se unutar crawler direktorijuma)

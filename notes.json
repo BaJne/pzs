@@ -1,0 +1,10 @@
+[
+  {
+    "command" : "scrapy shell 'https://www.etf.bg.ac.rs/'",
+    "description": "Manuelno scrapuj tekst"
+  },
+  {
+    "command" : "scrapy crawl cars",
+    "description": "Pokreni kravler projekat (Pozicionirati se unutar crawler direktorijuma)"
+  }
+]
