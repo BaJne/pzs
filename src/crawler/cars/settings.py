@@ -27,9 +27,9 @@ FEED_URI = r"./../../../output/cars_"
 
 FEED_EXPORT_ENCODING = 'utf-8'
 ITEM_PIPELINES = {
-  # 'scrapy.pipelines.files.FilesPipeline': 1,
   'crawler.cars.pipelines.CarsPipeline': 1
 }
+DB_LOCATION = r"./../../../output/cars.db"
 FILES_STORE = r"./../../../output/files"
 
 # Configure maximum concurrent requests performed by Scrapy (default: 16)
@@ -72,12 +72,6 @@ FILES_STORE = r"./../../../output/files"
 # See https://docs.scrapy.org/en/latest/topics/extensions.html
 #EXTENSIONS = {
 #    'scrapy.extensions.telnet.TelnetConsole': None,
-#}
-
-# Configure item pipelines
-# See https://docs.scrapy.org/en/latest/topics/item-pipeline.html
-#ITEM_PIPELINES = {
-#    'cars.pipelines.CarsPipeline': 300,
 #}
 
 # Enable and configure the AutoThrottle extension (disabled by default)

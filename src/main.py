@@ -7,7 +7,6 @@ import time
 
 FEED_URI = "./../output/cars_"
 
-
 def generate_filename():
     file_path = FEED_URI + str(np.random.randint(low=0, high=10000)) + '.json'
     return file_path
