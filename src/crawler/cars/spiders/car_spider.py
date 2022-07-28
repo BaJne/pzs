@@ -1,8 +1,11 @@
+import sys
+
 import requests
 import scrapy
 from ..items import CarsItem
 from scrapy.linkextractors import LinkExtractor
 from scrapy.spiders import Rule
+import logging
 
 
 class CarSpider(scrapy.Spider):
@@ -14,6 +17,9 @@ class CarSpider(scrapy.Spider):
         # 'https://www.mojtrg.rs/'
     ]
 
+    def __init__(self):
+        self.mLogger = logging.getLogger('data.collecting')
+
     def parse(self, response, **kwargs):
         containers = response.css("div.resultWrap div.panelList")
 
@@ -22,17 +28,16 @@ class CarSpider(scrapy.Spider):
             if link is not None:
                 yield response.follow(link, callback=self.parseItem)
             else:
-                print('ERROR link is null')
+                self.mLogger.error('ERROR link is null')
 
         next_page = response.css("div.pagination").xpath("//a[@class='pag_next']").xpath("@href")[0].get()
-        print(next_page)
 
         if next_page is not None:
             yield response.follow(next_page, callback=self.parse)
 
     def parseItem(self, response, **keywords):
         if response is None:
-            print('ERROR')
+            self.mLogger.error('Response is None!')
 
         item = CarsItem()
         item['naziv'] = response.css("div.singleOverview h1::text")[0].extract()

@@ -1,2 +1,5 @@
 venv
 output
+src/crawler/cars/__pycache__
+src/crawler/cars/spiders/__pycache__
+src/util/__pycache__

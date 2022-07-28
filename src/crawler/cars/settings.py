@@ -6,6 +6,7 @@
 #     https://docs.scrapy.org/en/latest/topics/settings.html
 #     https://docs.scrapy.org/en/latest/topics/downloader-middleware.html
 #     https://docs.scrapy.org/en/latest/topics/spider-middleware.html
+import logging
 
 BOT_NAME = 'cars'
 
@@ -24,13 +25,12 @@ FEED_FORMAT = "json"
 # Name of the file where
 # data extracted is stored
 FEED_URI = r"./../../../output/cars_"
-
 FEED_EXPORT_ENCODING = 'utf-8'
+
 ITEM_PIPELINES = {
   'crawler.cars.pipelines.CarsPipeline': 1
 }
-DB_LOCATION = r"./../../../output/cars.db"
-FILES_STORE = r"./../../../output/files"
+DB_LOCATION = r"./../../output/cars.db"
 
 # Configure maximum concurrent requests performed by Scrapy (default: 16)
 #CONCURRENT_REQUESTS = 32
@@ -39,6 +39,12 @@ FILES_STORE = r"./../../../output/files"
 # See https://docs.scrapy.org/en/latest/topics/settings.html#download-delay
 # See also autothrottle settings and docs
 #DOWNLOAD_DELAY = 3
+
+# LOGGING
+LOG_FORMAT = '%(filename)s[%(funcName)s:%(lineno)d] | %(levelname)s: %(message)s'
+LOG_ENABLED = True
+LOG_FILE = r"./../../log.txt"
+LOG_LEVEL = logging.WARNING
 
 # The download delay setting will honor only one of:
 #CONCURRENT_REQUESTS_PER_DOMAIN = 16
