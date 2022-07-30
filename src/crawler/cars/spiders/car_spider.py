@@ -18,28 +18,37 @@ class CarSpider(scrapy.Spider):
     ]
 
     def __init__(self):
+        super(CarSpider, self).__init__()
         self.mLogger = logging.getLogger('data.collecting')
 
     def parse(self, response, **kwargs):
         containers = response.css("div.resultWrap div.panelList")
+        link = containers[0].css("a.addImg ::attr(href)").get()
+        yield response.follow(link, callback=self.parseItem)
 
-        for div in containers:
-            link = div.css("a.addImg ::attr(href)").get()
-            if link is not None:
-                yield response.follow(link, callback=self.parseItem)
-            else:
-                self.mLogger.error('ERROR link is null')
+        # for div in containers:
+        #     link = div.css("a.addImg ::attr(href)").get()
+        #     if link is not None:
+        #         yield response.follow(link, callback=self.parseItem)
+        #     else:
+        #         self.mLogger.error('ERROR link is null')
 
-        next_page = response.css("div.pagination").xpath("//a[@class='pag_next']").xpath("@href")[0].get()
+        # next_page = response.css("div.pagination").xpath("//a[@class='pag_next']").xpath("@href")[0].get()
 
-        if next_page is not None:
-            yield response.follow(next_page, callback=self.parse)
+        # if next_page is not None:
+        #     yield response.follow(next_page, callback=self.parse)
 
     def parseItem(self, response, **keywords):
         if response is None:
             self.mLogger.error('Response is None!')
 
         item = CarsItem()
+
+        # Init with dumb data
+        item['prosecna_potrosnja'] = '0'
+        item['ubrzanje'] = '0'
+        item['prtljaznik'] = '0'
+
         item['naziv'] = response.css("div.singleOverview h1::text")[0].extract()
         item['cena'] = response.css(".sidebarPrice").css("span.priceReal::text")[0].extract()
 
