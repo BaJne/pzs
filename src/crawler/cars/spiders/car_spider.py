@@ -83,6 +83,8 @@ class CarSpider(scrapy.Spider):
             if att != "none":
                 item[att] = value
 
+        self.mLogger.debug(response.request.url)
+
         for m in response.css("iframe"):
             rating_div = m.xpath("@src").get()
             yield response.follow(rating_div, callback=self.get_rating, cb_kwargs=item)

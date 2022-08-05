@@ -167,6 +167,12 @@ class CarsPipeline:
         prosecna_potrosnja = item['prosecna_potrosnja']
         ubrzanje = item['ubrzanje']
         prtljaznik = item['prtljaznik']
+        klima = item['klima']
+        broj_sedista = item['broj_sedista']
+        pozicija_volana = item['pozicija_volana']
+        boja = item['boja']
+        boja_unutrasnjosti = item['boja_unutrasnjosti']
+        kategorija_vozila = item['kategorija_vozila']
 
         if self.error_process == 0:
             cursor = self.curr.execute("""insert into car(
@@ -184,8 +190,14 @@ class CarsPipeline:
                 broj_vrata,
                 prosecna_potrosnja,
                 ubrzanje,
-                prtljaznik
-              ) values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)""", (
+                prtljaznik,
+                klima,
+                broj_sedista,
+                pozicija_volana,
+                boja,
+                boja_unutrasnjosti,
+                kategorija_vozila
+              ) values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)""", (
                 item['naziv'],
                 cena,
                 godiste,
@@ -200,7 +212,13 @@ class CarsPipeline:
                 broj_vrata,
                 prosecna_potrosnja,
                 ubrzanje,
-                prtljaznik
+                prtljaznik,
+                klima,
+                broj_sedista,
+                pozicija_volana,
+                boja,
+                boja_unutrasnjosti,
+                kategorija_vozila
             ))
         else:
             cursor = self.curr.execute("""insert into car_temp(
@@ -218,8 +236,14 @@ class CarsPipeline:
                 broj_vrata,
                 prosecna_potrosnja,
                 ubrzanje,
-                prtljaznik
-              ) values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)""", (
+                prtljaznik,
+                klima,
+                broj_sedista,
+                pozicija_volana,
+                boja,
+                boja_unutrasnjosti,
+                kategorija_vozila
+              ) values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)""", (
                 item['naziv'],
                 cena,
                 godiste,
@@ -234,7 +258,13 @@ class CarsPipeline:
                 broj_vrata,
                 prosecna_potrosnja,
                 ubrzanje,
-                prtljaznik
+                prtljaznik,
+                klima,
+                broj_sedista,
+                pozicija_volana,
+                boja,
+                boja_unutrasnjosti,
+                kategorija_vozila
             ))
 
         if cursor.rowcount is 0:
