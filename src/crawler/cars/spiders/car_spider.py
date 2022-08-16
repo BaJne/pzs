@@ -26,17 +26,17 @@ class CarSpider(scrapy.Spider):
         link = containers[0].css("a.addImg ::attr(href)").get()
         yield response.follow(link, callback=self.parseItem)
 
-        # for div in containers:
-        #     link = div.css("a.addImg ::attr(href)").get()
-        #     if link is not None:
-        #         yield response.follow(link, callback=self.parseItem)
-        #     else:
-        #         self.mLogger.error('ERROR link is null')
+        for div in containers:
+            link = div.css("a.addImg ::attr(href)").get()
+            if link is not None:
+                yield response.follow(link, callback=self.parseItem)
+            else:
+                self.mLogger.error('ERROR link is null')
 
-        # next_page = response.css("div.pagination").xpath("//a[@class='pag_next']").xpath("@href")[0].get()
+        next_page = response.css("div.pagination").xpath("//a[@class='pag_next']").xpath("@href")[0].get()
 
-        # if next_page is not None:
-        #     yield response.follow(next_page, callback=self.parse)
+        if next_page is not None:
+            yield response.follow(next_page, callback=self.parse)
 
     def parseItem(self, response, **keywords):
         if response is None:
@@ -44,10 +44,20 @@ class CarSpider(scrapy.Spider):
 
         item = CarsItem()
 
+        # TODO Fix error list index out of range
+
         # Init with dumb data
         item['prosecna_potrosnja'] = '0'
         item['ubrzanje'] = '0'
         item['prtljaznik'] = '0'
+
+        item['broj_brzina'] = '0'
+        item['pozicija_volana'] = 'Leva'
+        item['pogon'] = None
+        item['boja_unutrasnjosti'] = None
+        item['klima'] = None
+        item['broj_sedista'] = '0'
+        item['broj_vrata'] = '0'
 
         item['naziv'] = response.css("div.singleOverview h1::text")[0].extract()
         item['cena'] = response.css(".sidebarPrice").css("span.priceReal::text")[0].extract()
@@ -60,26 +70,44 @@ class CarSpider(scrapy.Spider):
 
         lis1 = tech_divs[0].css("li")
         for index, li in enumerate(lis1):
+            att_tag = li.css("span::text").get()
             value = li.css("strong::text").get()
 
             attributes = {
-                0: 'kubikaza',
-                1: 'snaga',
-                2: 'kilometraza',
-                4: 'tip_motora',
-                5: 'pogon',
-                6: 'tip_menjaca',
-                7: 'broj_brzina',
-                8: 'broj_vrata',
-                9: 'broj_sedista',
-                10: 'pozicija_volana',
-                11: 'klima',
-                12: 'boja',
-                13: 'boja_unutrasnjosti',
-                14: 'kategorija_vozila'
+                'Kubikaža': 'kubikaza',
+                'Snaga': 'snaga',
+                'Prešao kilometara': 'kilometraza',
+                'Tip motora': 'tip_motora',
+                'Pogon': 'pogon',
+                'Menjač': 'tip_menjaca',
+                'Broj brzina': 'broj_brzina',
+                'Broj vrata': 'broj_vrata',
+                'Broj sedišta': 'broj_sedista',
+                'Strana volana': 'pozicija_volana',
+                'Klima': 'klima',
+                'Boja': 'boja',
+                'Boja unutrašnjosti': 'boja_unutrasnjosti',
+                'Kategorija': 'kategorija_vozila'
             }
 
-            att = attributes.get(index, "none")
+            att = attributes.get(att_tag, "none")
+            if att != "none":
+                item[att] = value
+
+        lis2 = tech_divs[1].css("li")
+        for index, li in enumerate(lis2):
+            att_tag = li.css("span::text").get()
+            value = li.css("strong::text").get()
+
+            attributes = {
+                'Havarisano': 'havarisano',
+                'Garažiran': 'garaziran',
+                'Vozilo je': 'nov',
+                'Servisna knjižica': 'servisna_knjizica',
+                'Registrovano do': 'registrovano'
+            }
+
+            att = attributes.get(att_tag, "none")
             if att != "none":
                 item[att] = value
 

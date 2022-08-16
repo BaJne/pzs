@@ -13,14 +13,14 @@ class CarsItem(scrapy.Item):
     godiste = scrapy.Field()
     gorivo = scrapy.Field()
 
-    kubikaza = scrapy.Field()
-    snaga = scrapy.Field()
-    kilometraza = scrapy.Field()
+    kubikaza = scrapy.Field()               # cm3
+    snaga = scrapy.Field()                  # KS (Konjskih snaga)
+    kilometraza = scrapy.Field()            # km
     tip_motora = scrapy.Field()
     pogon = scrapy.Field()
     tip_menjaca = scrapy.Field()
-    broj_brzina = scrapy.Field()
-    broj_vrata = scrapy.Field()
+    broj_brzina = scrapy.Field()            # broj
+    broj_vrata = scrapy.Field()             # broj vrata
     broj_sedista = scrapy.Field()
     pozicija_volana = scrapy.Field()
     klima = scrapy.Field()
@@ -28,12 +28,13 @@ class CarsItem(scrapy.Item):
     boja_unutrasnjosti = scrapy.Field()
     kategorija_vozila = scrapy.Field()
 
-    prosecna_potrosnja = scrapy.Field() # broj l|100km
+    prosecna_potrosnja = scrapy.Field()     # broj l|100km
     ubrzanje = scrapy.Field()
     prtljaznik = scrapy.Field()
 
     # Istorija vozila
     servisna_knjizica = scrapy.Field()
+    registrovano = scrapy.Field()
     havarisano = scrapy.Field()
     garaziran = scrapy.Field()
     nov = scrapy.Field()
